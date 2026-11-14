@@ -1,0 +1,663 @@
+:root {
+    /* Paleta industrijskog čelika, tehničkog papira i inženjerske narandžaste/plave */
+    --bg-main: #f4f6f8;
+    --bg-alt: #e9eef3;
+    --bg-card: #ffffff;
+    --navy-dark: #10253f;
+    --steel: #2c3e50;
+    --text-main: #1a2530;
+    --text-muted: #52606d;
+    --accent: #d95d1e; /* Industrijska sigurnosna narandžasta */
+    --accent-blue: #1d5b96; /* Tehnička plava (Blueprint) */
+    --border: #cbd2d9;
+    --grid-line: rgba(29, 91, 150, 0.06);
+    --font-sans: 'Barlow', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    /* Suptilna milimetarska mreža u pozadini */
+    background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 28px 28px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+/* Navigacija */
+.navbar {
+    position: sticky;
+    top: 0;
+    background: var(--navy-dark);
+    color: #fff;
+    border-bottom: 3px solid var(--accent);
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo-box {
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 6px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.logo-text strong {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.logo-text small {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #9fb3c8;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 24px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #d9e2ec;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+.btn-nav {
+    background: var(--accent);
+    color: #fff !important;
+    padding: 8px 16px;
+    font-weight: 600;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+/* Hero sekcija */
+.hero {
+    padding: 75px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.spec-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-blue);
+    background: rgba(29, 91, 150, 0.1);
+    border-left: 3px solid var(--accent-blue);
+    padding: 5px 12px;
+    margin-bottom: 14px;
+}
+
+.hero h1 {
+    font-size: 3.1rem;
+    font-weight: 700;
+    color: var(--navy-dark);
+    line-height: 1.1;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 18px;
+}
+
+.hero-desc {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 28px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    transition: all 0.2s;
+    border-radius: 2px; /* Oštrije, tehničke ivice */
+}
+
+.btn-primary {
+    background: var(--navy-dark);
+    color: #fff;
+    border: 2px solid var(--navy-dark);
+}
+
+.btn-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.btn-secondary {
+    background: #fff;
+    color: var(--navy-dark);
+    border: 2px solid var(--navy-dark);
+}
+
+.btn-secondary:hover {
+    background: var(--navy-dark);
+    color: #fff;
+}
+
+/* Tehnička sastavnica (ISO Title Block) */
+.title-block {
+    background: #fff;
+    border: 2px solid var(--navy-dark);
+    box-shadow: 6px 6px 0px var(--navy-dark);
+}
+
+.tb-header {
+    background: var(--navy-dark);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.tb-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.tb-table th,
+.tb-table td {
+    border: 1px solid var(--border);
+    padding: 9px 12px;
+    text-align: left;
+}
+
+.tb-table th {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: #f8fafc;
+    width: 34%;
+}
+
+.tb-table td {
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.tb-footer {
+    background: #f1f5f9;
+    border-top: 1px solid var(--navy-dark);
+    padding: 7px 14px;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+/* Opšte sekcije */
+.section {
+    padding: 75px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.bg-alt {
+    background-color: rgba(233, 238, 243, 0.75);
+}
+
+.section-label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: var(--navy-dark);
+    margin-bottom: 34px;
+}
+
+/* O meni & Edukacija */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 36px;
+    align-items: start;
+}
+
+.about-text p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+}
+
+.about-text strong {
+    color: var(--navy-dark);
+}
+
+.edu-box {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent-blue);
+    padding: 24px;
+}
+
+.edu-badge {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-blue);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.edu-box h3 {
+    color: var(--navy-dark);
+    font-size: 1.35rem;
+}
+
+.uni {
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 12px 0;
+}
+
+.edu-box p {
+    font-size: 0.92rem;
+    margin-bottom: 6px;
+}
+
+/* Kompetencije */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 24px;
+}
+
+.skill-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 26px;
+    position: relative;
+}
+
+.card-num {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.skill-card h3 {
+    color: var(--navy-dark);
+    margin-bottom: 14px;
+    font-size: 1.2rem;
+}
+
+.skill-card ul {
+    list-style: none;
+}
+
+.skill-card li {
+    color: var(--text-muted);
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 0.94rem;
+}
+
+.skill-card li:last-child {
+    border-bottom: none;
+}
+
+.skill-card strong {
+    color: var(--text-main);
+}
+
+/* Iskustvo */
+.experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.exp-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--navy-dark);
+    padding: 26px;
+}
+
+.exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.exp-header h3 {
+    color: var(--navy-dark);
+    font-size: 1.25rem;
+}
+
+.company {
+    font-weight: 600;
+    color: var(--accent-blue);
+    font-size: 0.95rem;
+}
+
+.exp-tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    font-weight: 600;
+    color: var(--navy-dark);
+}
+
+.exp-card ul {
+    padding-left: 20px;
+    color: var(--text-muted);
+}
+
+.exp-card li {
+    margin-bottom: 6px;
+}
+
+/* Projekti */
+.section-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.section-header-flex .section-title {
+    margin-bottom: 0;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-btn {
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 8px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: var(--navy-dark);
+    color: #fff;
+    border-color: var(--navy-dark);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    gap: 24px;
+}
+
+.project-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(16, 37, 63, 0.1);
+}
+
+.project-image-placeholder {
+    height: 200px;
+    background: #eef3f8;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 16px;
+    position: relative;
+    /* Blueprint mreža unutar mesta za crtež */
+    background-image: 
+        linear-gradient(to right, rgba(29, 91, 150, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(29, 91, 150, 0.12) 1px, transparent 1px);
+    background-size: 16px 16px;
+}
+
+.placeholder-inner {
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+}
+
+.crosshair {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+    color: var(--accent);
+}
+
+.project-image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-body {
+    padding: 22px;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.project-tags span {
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    color: var(--navy-dark);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    font-weight: 600;
+}
+
+.project-body h3 {
+    color: var(--navy-dark);
+    margin-bottom: 10px;
+    font-size: 1.15rem;
+}
+
+.project-body p {
+    color: var(--text-muted);
+    font-size: 0.93rem;
+}
+
+/* Kontakt */
+.contact-box {
+    max-width: 850px;
+}
+
+.contact-box p {
+    color: var(--text-muted);
+    margin-bottom: 26px;
+    font-size: 1.05rem;
+}
+
+.contact-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.contact-item {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+}
+
+.contact-item:hover {
+    transform: translateY(-2px);
+}
+
+.contact-item span {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.contact-item strong {
+    color: var(--navy-dark);
+    font-size: 1rem;
+}
+
+footer {
+    background: var(--navy-dark);
+    color: #9fb3c8;
+    padding: 24px 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Responzivnost */
+@media (max-width: 850px) {
+    .hero-grid,
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 2.4rem;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        width: 100%;
+        background: var(--navy-dark);
+        padding: 20px;
+        border-bottom: 3px solid var(--accent);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+}
