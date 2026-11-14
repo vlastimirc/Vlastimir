@@ -4,10 +4,271 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vlastimir Černoš | Mašinski inženjer — CAD/CAM & Proizvodnja</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f4f6f8;
+            --bg-alt: #e9eef3;
+            --bg-card: #ffffff;
+            --navy-dark: #10253f;
+            --steel: #2c3e50;
+            --text-main: #1a2530;
+            --text-muted: #52606d;
+            --accent: #d95d1e;
+            --accent-blue: #1d5b96;
+            --border: #cbd2d9;
+            --grid-line: rgba(29, 91, 150, 0.06);
+            --font-sans: 'Barlow', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            background-image: 
+                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        .container { width: 90%; max-width: 1120px; margin: 0 auto; }
+
+        /* Navigacija */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: var(--navy-dark);
+            color: #fff;
+            border-bottom: 3px solid var(--accent);
+            z-index: 1000;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #fff;
+        }
+        .logo-box {
+            background: var(--accent);
+            color: #fff;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 6px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+        .logo-text strong { font-size: 1rem; letter-spacing: 0.5px; }
+        .logo-text small { font-family: var(--font-mono); font-size: 0.7rem; color: #9fb3c8; }
+
+        .nav-right { display: flex; align-items: center; gap: 18px; }
+        .nav-links { display: flex; list-style: none; gap: 22px; align-items: center; }
+        .nav-links a {
+            color: #d9e2ec;
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .btn-nav { background: var(--accent); color: #fff !important; padding: 8px 16px; font-weight: 600; }
+
+        /* SR / EN dugme */
+        .lang-switch {
+            display: flex;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: #9fb3c8;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn.active {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .menu-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; }
+
+        /* Hero sekcija */
+        .hero { padding: 75px 0; border-bottom: 1px solid var(--border); }
+        .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: center; }
+        .spec-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            background: rgba(29, 91, 150, 0.1);
+            border-left: 3px solid var(--accent-blue);
+            padding: 5px 12px;
+            margin-bottom: 14px;
+        }
+        .hero h1 { font-size: 3.1rem; font-weight: 700; color: var(--navy-dark); line-height: 1.1; margin-bottom: 10px; }
+        .subtitle { font-size: 1.2rem; font-weight: 600; color: var(--accent); margin-bottom: 18px; }
+        .hero-desc { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 28px; }
+        .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+        .btn {
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            transition: all 0.2s;
+            border-radius: 2px;
+        }
+        .btn-primary { background: var(--navy-dark); color: #fff; border: 2px solid var(--navy-dark); }
+        .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+        .btn-secondary { background: #fff; color: var(--navy-dark); border: 2px solid var(--navy-dark); }
+        .btn-secondary:hover { background: var(--navy-dark); color: #fff; }
+
+        /* ISO Title Block */
+        .title-block { background: #fff; border: 2px solid var(--navy-dark); box-shadow: 6px 6px 0px var(--navy-dark); }
+        .tb-header {
+            background: var(--navy-dark);
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            padding: 8px 14px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+        }
+        .tb-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        .tb-table th, .tb-table td { border: 1px solid var(--border); padding: 9px 12px; text-align: left; }
+        .tb-table th { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); background: #f8fafc; width: 34%; }
+        .tb-table td { font-weight: 500; color: var(--text-main); }
+        .tb-footer {
+            background: #f1f5f9;
+            border-top: 1px solid var(--navy-dark);
+            padding: 7px 14px;
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        /* Sekcije */
+        .section { padding: 75px 0; border-bottom: 1px solid var(--border); }
+        .bg-alt { background-color: rgba(233, 238, 243, 0.75); }
+        .section-label { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); font-weight: 600; letter-spacing: 0.8px; margin-bottom: 6px; }
+        .section-title { font-size: 2rem; color: var(--navy-dark); margin-bottom: 34px; }
+
+        /* O meni */
+        .about-grid { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 36px; align-items: start; }
+        .about-text p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 16px; }
+        .about-text strong { color: var(--navy-dark); }
+        .edu-box { background: #fff; border: 1px solid var(--border); border-top: 4px solid var(--accent-blue); padding: 24px; }
+        .edu-badge { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-blue); font-weight: 600; margin-bottom: 8px; }
+        .edu-box h3 { color: var(--navy-dark); font-size: 1.35rem; }
+        .uni { font-weight: 600; color: var(--text-muted); margin-bottom: 12px; }
+        .divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+        .edu-box p { font-size: 0.92rem; margin-bottom: 6px; }
+
+        /* Kompetencije */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; }
+        .skill-card { background: #fff; border: 1px solid var(--border); padding: 26px; }
+        .card-num { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+        .skill-card h3 { color: var(--navy-dark); margin-bottom: 14px; font-size: 1.2rem; }
+        .skill-card ul { list-style: none; }
+        .skill-card li { color: var(--text-muted); padding: 8px 0; border-bottom: 1px dashed var(--border); font-size: 0.94rem; }
+        .skill-card li:last-child { border-bottom: none; }
+        .skill-card strong { color: var(--text-main); }
+
+        /* Iskustvo */
+        .experience-list { display: flex; flex-direction: column; gap: 24px; }
+        .exp-card { background: #fff; border: 1px solid var(--border); border-left: 5px solid var(--navy-dark); padding: 26px; }
+        .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+        .exp-header h3 { color: var(--navy-dark); font-size: 1.25rem; }
+        .company { font-weight: 600; color: var(--accent-blue); font-size: 0.95rem; }
+        .exp-tag { font-family: var(--font-mono); font-size: 0.75rem; background: var(--bg-alt); border: 1px solid var(--border); padding: 4px 10px; font-weight: 600; color: var(--navy-dark); }
+        .exp-card ul { padding-left: 20px; color: var(--text-muted); }
+        .exp-card li { margin-bottom: 6px; }
+
+        /* Projekti */
+        .section-header-flex { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; }
+        .section-header-flex .section-title { margin-bottom: 0; }
+        .filter-buttons { display: flex; gap: 8px; }
+        .filter-btn { background: #fff; border: 1px solid var(--border); color: var(--text-main); padding: 8px 14px; font-family: var(--font-mono); font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+        .filter-btn.active, .filter-btn:hover { background: var(--navy-dark); color: #fff; border-color: var(--navy-dark); }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 24px; }
+        .project-card { background: #fff; border: 1px solid var(--border); transition: box-shadow 0.2s, transform 0.2s; }
+        .project-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(16, 37, 63, 0.1); }
+        .project-image-placeholder {
+            height: 200px;
+            background: #eef3f8;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 16px;
+            background-image: 
+                linear-gradient(to right, rgba(29, 91, 150, 0.12) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(29, 91, 150, 0.12) 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+        .placeholder-inner { color: var(--accent-blue); font-family: var(--font-mono); font-size: 0.82rem; }
+        .crosshair { display: block; font-size: 1.5rem; margin-bottom: 4px; color: var(--accent); }
+        .project-image-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+        .project-body { padding: 22px; }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+        .project-tags span { background: var(--bg-main); border: 1px solid var(--border); color: var(--navy-dark); font-family: var(--font-mono); font-size: 0.72rem; padding: 2px 8px; font-weight: 600; }
+        .project-body h3 { color: var(--navy-dark); margin-bottom: 10px; font-size: 1.15rem; }
+        .project-body p { color: var(--text-muted); font-size: 0.93rem; }
+
+        /* Kontakt */
+        .contact-box { max-width: 850px; }
+        .contact-box p { color: var(--text-muted); margin-bottom: 26px; font-size: 1.05rem; }
+        .contact-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+        .contact-item { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 16px 20px; text-decoration: none; display: flex; flex-direction: column; transition: transform 0.2s; }
+        .contact-item:hover { transform: translateY(-2px); }
+        .contact-item span { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); margin-bottom: 4px; }
+        .contact-item strong { color: var(--navy-dark); font-size: 1rem; }
+
+        footer { background: var(--navy-dark); color: #9fb3c8; padding: 24px 0; font-family: var(--font-mono); font-size: 0.8rem; }
+        .footer-flex { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+        @media (max-width: 850px) {
+            .hero-grid, .about-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.4rem; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                width: 100%;
+                background: var(--navy-dark);
+                padding: 20px;
+                border-bottom: 3px solid var(--accent);
+            }
+            .nav-links.active { display: flex; }
+        }
+    </style>
 </head>
 <body>
     <!-- Tehničko zaglavlje / Navigacija -->
@@ -17,78 +278,84 @@
                 <span class="logo-box">VČ</span>
                 <div class="logo-text">
                     <strong>VLASTIMIR ČERNOŠ</strong>
-                    <small>MAŠINSKO INŽENJERSTVO // BEOGRAD</small>
+                    <small data-sr="MAŠINSKO INŽENJERSTVO // BEOGRAD" data-en="MECHANICAL ENGINEERING // BELGRADE">MAŠINSKO INŽENJERSTVO // BEOGRAD</small>
                 </div>
             </a>
-            <nav>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#o-meni">01. Profil</a></li>
-                    <li><a href="#vestine">02. Kompetencije</a></li>
-                    <li><a href="#iskustvo">03. Praksa & Rad</a></li>
-                    <li><a href="#projekti">04. CAD Projekti</a></li>
-                    <li><a href="#kontakt" class="btn-nav">Kontakt</a></li>
-                </ul>
-            </nav>
-            <button class="menu-toggle" id="menuToggle" aria-label="Otvori meni">☰</button>
+            <div class="nav-right">
+                <nav>
+                    <ul class="nav-links" id="navLinks">
+                        <li><a href="#o-meni" data-sr="01. Profil" data-en="01. Profile">01. Profil</a></li>
+                        <li><a href="#vestine" data-sr="02. Kompetencije" data-en="02. Competencies">02. Kompetencije</a></li>
+                        <li><a href="#iskustvo" data-sr="03. Praksa & Rad" data-en="03. Experience">03. Praksa & Rad</a></li>
+                        <li><a href="#projekti" data-sr="04. CAD Projekti" data-en="04. CAD Projects">04. CAD Projekti</a></li>
+                        <li><a href="#kontakt" class="btn-nav" data-sr="Kontakt" data-en="Contact">Kontakt</a></li>
+                    </ul>
+                </nav>
+                <div class="lang-switch" role="group" aria-label="Language switch">
+                    <button type="button" class="lang-btn active" data-lang="sr">SR</button>
+                    <button type="button" class="lang-btn" data-lang="en">EN</button>
+                </div>
+                <button class="menu-toggle" id="menuToggle" aria-label="Otvori meni">☰</button>
+            </div>
         </div>
     </header>
 
-    <!-- Hero sekcija u stilu tehničkog crteža / zaglavlja sastavnice -->
+    <!-- Hero sekcija -->
     <section id="pocetna" class="hero">
         <div class="container hero-grid">
             <div class="hero-content">
-                <div class="spec-tag">STATUS: APSOLVENT // MAŠINSKI FAKULTET UB</div>
+                <div class="spec-tag" data-sr="STATUS: APSOLVENT // MAŠINSKI FAKULTET UB" data-en="STATUS: FINAL-YEAR STUDENT // FACULTY OF MECHANICAL ENGINEERING UB">STATUS: APSOLVENT // MAŠINSKI FAKULTET UB</div>
                 <h1>Vlastimir Černoš</h1>
-                <p class="subtitle">Konstruisanje • CAD/CAM projektovanje • CNC obrada & Termotehnika</p>
-                <p class="hero-desc">
+                <p class="subtitle" data-sr="Konstruisanje • CAD/CAM projektovanje • CNC obrada & Termotehnika" data-en="Mechanical Design • CAD/CAM Engineering • CNC Machining & HVAC">Konstruisanje • CAD/CAM projektovanje • CNC obrada & Termotehnika</p>
+                <p class="hero-desc" data-sr="Student završne godine Mašinskog fakulteta u Beogradu sa praktičnim iskustvom direktno iz proizvodne hale i sa terena. Kombinujem 3D modeliranje (Creo, SolidWorks) sa realnim poznavanjem tehnologija obrade metala (laser, presa, waterjet, CNC strug) i instalacija." data-en="Final-year Mechanical Engineering student at the University of Belgrade with hands-on experience directly from the production floor and field installations. Combining 3D modeling (Creo, SolidWorks) with practical knowledge of metal fabrication (laser, press, waterjet, CNC lathe) and gas/heating systems.">
                     Student završne godine Mašinskog fakulteta u Beogradu sa praktičnim iskustvom direktno iz proizvodne hale i sa terena. Kombinujem 3D modeliranje (Creo, SolidWorks) sa realnim poznavanjem tehnologija obrade metala (laser, presa, waterjet, CNC strug) i instalacija.
                 </p>
                 <div class="hero-actions">
-                    <a href="#projekti" class="btn btn-primary">Pregled CAD projekata</a>
-                    <a href="#kontakt" class="btn btn-secondary">Kontaktiraj me</a>
+                    <a href="#projekti" class="btn btn-primary" data-sr="Pregled CAD projekata" data-en="View CAD Projects">Pregled CAD projekata</a>
+                    <a href="#kontakt" class="btn btn-secondary" data-sr="Kontaktiraj me" data-en="Contact Me">Kontaktiraj me</a>
                 </div>
             </div>
 
-            <!-- Tehnička sastavnica (Title Block) umesto JSON koda -->
+            <!-- Tehnička sastavnica -->
             <div class="title-block">
                 <div class="tb-header">
-                    <span>TEHNIČKA SPECIFIKACIJA KANDIDATA</span>
+                    <span data-sr="TEHNIČKA SPECIFIKACIJA KANDIDATA" data-en="CANDIDATE TECHNICAL SPECIFICATION">TEHNIČKA SPECIFIKACIJA KANDIDATA</span>
                     <span>ISO 7200</span>
                 </div>
                 <table class="tb-table">
                     <tr>
-                        <th>INŽENJER</th>
+                        <th data-sr="INŽENJER" data-en="ENGINEER">INŽENJER</th>
                         <td>Vlastimir Černoš</td>
                     </tr>
                     <tr>
-                        <th>INSTITUCIJA</th>
-                        <td>Mašinski fakultet, Univerzitet u Beogradu</td>
+                        <th data-sr="INSTITUCIJA" data-en="INSTITUTION">INSTITUCIJA</th>
+                        <td data-sr="Mašinski fakultet, Univerzitet u Beogradu" data-en="Faculty of Mechanical Engineering, University of Belgrade">Mašinski fakultet, Univerzitet u Beogradu</td>
                     </tr>
                     <tr>
-                        <th>USMERENJE</th>
-                        <td>Mašinsko inženjerstvo (Apsolvent)</td>
+                        <th data-sr="USMERENJE" data-en="DEGREE">USMERENJE</th>
+                        <td data-sr="Mašinsko inženjerstvo (Apsolvent)" data-en="Mechanical Engineering (Final-Year Student)">Mašinsko inženjerstvo (Apsolvent)</td>
                     </tr>
                     <tr>
                         <th>CAD / CAM</th>
                         <td>Creo Parametric, SolidWorks, AutoCAD</td>
                     </tr>
                     <tr>
-                        <th>PROIZVODNJA</th>
-                        <td>CNC Laser, Waterjet, Presa, Strug, Zavarivanje</td>
+                        <th data-sr="PROIZVODNJA" data-en="MANUFACTURING">PROIZVODNJA</th>
+                        <td data-sr="CNC Laser, Waterjet, Presa, Strug, Zavarivanje" data-en="CNC Laser, Waterjet, Press, Lathe, Welding">CNC Laser, Waterjet, Presa, Strug, Zavarivanje</td>
                     </tr>
                     <tr>
-                        <th>LOKACIJA</th>
-                        <td>Beograd, Srbija</td>
+                        <th data-sr="JEZICI" data-en="LANGUAGES">JEZICI</th>
+                        <td data-sr="Engleski (B2/C1), Ruski (A2 poslovno)" data-en="English (B2/C1), Russian (A2 Business)">Engleski (B2/C1), Ruski (A2 poslovno)</td>
                     </tr>
                     <tr>
-                        <th>CILJ</th>
-                        <td>Stručna praksa / Juniorska pozicija</td>
+                        <th data-sr="LOKACIJA" data-en="LOCATION">LOKACIJA</th>
+                        <td data-sr="Beograd, Srbija" data-en="Belgrade, Serbia">Beograd, Srbija</td>
                     </tr>
                 </table>
                 <div class="tb-footer">
-                    <span>RAZMERA: 1:1</span>
-                    <span>TOLERANCIJA: ISO 2768-m</span>
-                    <span>LIST: 1/1</span>
+                    <span data-sr="RAZMERA: 1:1" data-en="SCALE: 1:1">RAZMERA: 1:1</span>
+                    <span data-sr="TOLERANCIJA: ISO 2768-m" data-en="TOLERANCE: ISO 2768-m">TOLERANCIJA: ISO 2768-m</span>
+                    <span data-sr="LIST: 1/1" data-en="SHEET: 1/1">LIST: 1/1</span>
                 </div>
             </div>
         </div>
@@ -97,61 +364,61 @@
     <!-- 01. O meni & Obrazovanje -->
     <section id="o-meni" class="section bg-alt">
         <div class="container">
-            <div class="section-label">SEKCIJA 01 // PROFIL I OBRAZOVANJE</div>
-            <h2 class="section-title">Inženjerski pristup od crteža do gotovog dela</h2>
+            <div class="section-label" data-sr="SEKCIJA 01 // PROFIL I OBRAZOVANJE" data-en="SECTION 01 // PROFILE & EDUCATION">SEKCIJA 01 // PROFIL I OBRAZOVANJE</div>
+            <h2 class="section-title" data-sr="Inženjerski pristup od crteža do gotovog dela" data-en="Engineering Approach from Drawing to Finished Part">Inženjerski pristup od crteža do gotovog dela</h2>
             <div class="about-grid">
                 <div class="about-text">
-                    <p>
+                    <p data-sr="Kao apsolvent <strong>Mašinskog fakulteta Univerziteta u Beogradu</strong>, fokusiran sam na povezivanje teorijskih proračuna i 3D konstruisanja sa realnim proizvodnim procesima." data-en="As a final-year student at the <strong>Faculty of Mechanical Engineering, University of Belgrade</strong>, I focus on bridging theoretical calculations and 3D design with real-world manufacturing processes.">
                         Kao apsolvent <strong>Mašinskog fakulteta Univerziteta u Beogradu</strong>, fokusiran sam na povezivanje teorijskih proračuna i 3D konstruisanja sa realnim proizvodnim procesima.
                     </p>
-                    <p>
+                    <p data-sr="Rad u proizvodnom pogonu i na instalacijama omogućio mi je da razumem <strong>tehnologičnost konstrukcije (DFM)</strong> — kako se materijal ponaša pri sečenju laserom ili waterjet-om, kako se planira savijanje na hidrauličnoj presi i kako se pripremaju sklopovi za zavarivanje i mašinsku obradu." data-en="Working on the production floor and field installations gave me practical insight into <strong>Design for Manufacturing (DFM)</strong> — understanding material behavior during laser or waterjet cutting, planning bends on a hydraulic press, and preparing assemblies for welding and machining.">
                         Rad u proizvodnom pogonu i na instalacijama omogućio mi je da razumem <strong>tehnologičnost konstrukcije (DFM)</strong> — kako se materijal ponaša pri sečenju laserom ili waterjet-om, kako se planira savijanje na hidrauličnoj presi i kako se pripremaju sklopovi za zavarivanje i mašinsku obradu.
                     </p>
                 </div>
                 <div class="edu-box">
-                    <div class="edu-badge">AKADEMSKO OBRAZOVANJE</div>
-                    <h3>Mašinski fakultet</h3>
-                    <p class="uni">Univerzitet u Beogradu</p>
+                    <div class="edu-badge" data-sr="AKADEMSKO OBRAZOVANJE" data-en="ACADEMIC EDUCATION">AKADEMSKO OBRAZOVANJE</div>
+                    <h3 data-sr="Mašinski fakultet" data-en="Faculty of Mechanical Engineering">Mašinski fakultet</h3>
+                    <p class="uni" data-sr="Univerzitet u Beogradu" data-en="University of Belgrade">Univerzitet u Beogradu</p>
                     <hr class="divider">
-                    <p><strong>Program:</strong> Osnovne akademske studije — Mašinsko inženjerstvo</p>
-                    <p><strong>Status:</strong> Apsolvent (završna faza studija)</p>
-                    <p><strong>Fokus:</strong> Mašinski elementi, CAD/CAM tehnologije, tehnička dokumentacija po ISO standardima.</p>
+                    <p data-sr="<strong>Program:</strong> Osnovne akademske studije — Mašinsko inženjerstvo" data-en="<strong>Program:</strong> Bachelor of Academic Studies — Mechanical Engineering"><strong>Program:</strong> Osnovne akademske studije — Mašinsko inženjerstvo</p>
+                    <p data-sr="<strong>Status:</strong> Apsolvent (završna faza studija)" data-en="<strong>Status:</strong> Final-Year Student (Apsolvent)"><strong>Status:</strong> Apsolvent (završna faza studija)</p>
+                    <p data-sr="<strong>Fokus:</strong> Mašinski elementi, CAD/CAM tehnologije, tehnička dokumentacija po ISO standardima." data-en="<strong>Focus:</strong> Machine elements, CAD/CAM technologies, technical documentation per ISO standards."><strong>Fokus:</strong> Mašinski elementi, CAD/CAM tehnologije, tehnička dokumentacija po ISO standardima.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 02. Tehničke kompetencije -->
+    <!-- 02. Tehničke kompetencije i jezici -->
     <section id="vestine" class="section">
         <div class="container">
-            <div class="section-label">SEKCIJA 02 // TEHNIČKE KOMPETENCIJE</div>
-            <h2 class="section-title">Alati, mašine i tehnologije</h2>
+            <div class="section-label" data-sr="SEKCIJA 02 // TEHNIČKE KOMPETENCIJE I JEZICI" data-en="SECTION 02 // TECHNICAL COMPETENCIES & LANGUAGES">SEKCIJA 02 // TEHNIČKE KOMPETENCIJE I JEZICI</div>
+            <h2 class="section-title" data-sr="Alati, mašine, tehnologije i jezici" data-en="Tools, Machinery, Technologies & Languages">Alati, mašine, tehnologije i jezici</h2>
             <div class="skills-grid">
                 <div class="skill-card">
-                    <div class="card-num">01 / SOFTVER</div>
-                    <h3>CAD / CAM Okruženja</h3>
+                    <div class="card-num" data-sr="01 / SOFTVER" data-en="01 / SOFTWARE">01 / SOFTVER</div>
+                    <h3 data-sr="CAD / CAM Okruženja" data-en="CAD / CAM Environments">CAD / CAM Okruženja</h3>
                     <ul>
-                        <li><strong>Creo Parametric:</strong> 3D modeliranje delova i sklopova, CAM putanje alata, tehnički crteži.</li>
-                        <li><strong>SolidWorks:</strong> Konstruisanje sklopova, razmeravanje, priprema za proizvodnju.</li>
-                        <li><strong>AutoCAD:</strong> Izrada i čitanje 2D radioničke dokumentacije.</li>
+                        <li data-sr="<strong>Creo Parametric:</strong> 3D modeliranje delova i sklopova, CAM putanje alata, tehnički crteži." data-en="<strong>Creo Parametric:</strong> 3D part and assembly modeling, CAM toolpaths, technical drawings."><strong>Creo Parametric:</strong> 3D modeliranje delova i sklopova, CAM putanje alata, tehnički crteži.</li>
+                        <li data-sr="<strong>SolidWorks:</strong> Konstruisanje sklopova, razmeravanje, priprema za proizvodnju." data-en="<strong>SolidWorks:</strong> Assembly design, detailed dimensioning, manufacturing preparation."><strong>SolidWorks:</strong> Konstruisanje sklopova, razmeravanje, priprema za proizvodnju.</li>
+                        <li data-sr="<strong>AutoCAD:</strong> Izrada i čitanje 2D radioničke dokumentacije." data-en="<strong>AutoCAD:</strong> Creation and interpretation of 2D workshop drawings."><strong>AutoCAD:</strong> Izrada i čitanje 2D radioničke dokumentacije.</li>
                     </ul>
                 </div>
                 <div class="skill-card">
-                    <div class="card-num">02 / POGON</div>
-                    <h3>Mašinska obrada i CNC</h3>
+                    <div class="card-num" data-sr="02 / POGON" data-en="02 / WORKSHOP">02 / POGON</div>
+                    <h3 data-sr="Mašinska obrada i CNC" data-en="Machining & CNC Operations">Mašinska obrada i CNC</h3>
                     <ul>
-                        <li><strong>Obrada lima:</strong> Upravljanje i priprema CNC lasera, waterjet mašine i hidraulične prese.</li>
-                        <li><strong>Obrada rezanjem:</strong> Rad na CNC obradnom centru, CNC strugu i konvencionalnim mašinama.</li>
-                        <li><strong>Programiranje:</strong> Ručno pisanje i korekcija G-koda.</li>
+                        <li data-sr="<strong>Obrada lima:</strong> Upravljanje i priprema CNC lasera, waterjet mašine i hidraulične prese." data-en="<strong>Sheet Metal Processing:</strong> Operation and setup of CNC laser, waterjet cutter, and hydraulic press."><strong>Obrada lima:</strong> Upravljanje i priprema CNC lasera, waterjet mašine i hidraulične prese.</li>
+                        <li data-sr="<strong>Obrada rezanjem:</strong> Rad na CNC obradnom centru, CNC strugu i konvencionalnim mašinama." data-en="<strong>Machining:</strong> Operation of CNC machining center, CNC lathe, and conventional machine tools."><strong>Obrada rezanjem:</strong> Rad na CNC obradnom centru, CNC strugu i konvencionalnim mašinama.</li>
+                        <li data-sr="<strong>Programiranje:</strong> Ručno pisanje i korekcija G-koda." data-en="<strong>Programming:</strong> Manual G-code programming and editing."><strong>Programiranje:</strong> Ručno pisanje i korekcija G-koda.</li>
                     </ul>
                 </div>
                 <div class="skill-card">
-                    <div class="card-num">03 / TEHNOLOGIJA</div>
-                    <h3>Spajanje, instalacije i standardi</h3>
+                    <div class="card-num" data-sr="03 / TEHNOLOGIJA & JEZICI" data-en="03 / STANDARDS & LANGUAGES">03 / TEHNOLOGIJA & JEZICI</div>
+                    <h3 data-sr="Standardi, instalacije i jezici" data-en="Standards, Installations & Languages">Standardi, instalacije i jezici</h3>
                     <ul>
-                        <li><strong>Dokumentacija:</strong> Izrada crteža, sastavnica i tolerancija u skladu sa ISO standardima.</li>
-                        <li><strong>Zavarivanje:</strong> Praktične osnove zavarivanja metalnih pozicija i podsklopova.</li>
-                        <li><strong>Termotehnika:</strong> Montaža bakarnih cevovoda, grejnih tela i servis gasnih kotlova.</li>
+                        <li data-sr="<strong>Dokumentacija:</strong> Crteži, sastavnice i tolerancije po ISO standardima." data-en="<strong>Documentation:</strong> Technical drawings, BOMs, and tolerances per ISO standards."><strong>Dokumentacija:</strong> Crteži, sastavnice i tolerancije po ISO standardima.</li>
+                        <li data-sr="<strong>Zavarivanje & Termotehnika:</strong> Osnove zavarivanja sklopova, montaža bakarnih cevi i servis gasnih kotlova." data-en="<strong>Welding & HVAC:</strong> Fundamentals of metal assembly welding, copper piping installation, and gas boiler servicing."><strong>Zavarivanje & Termotehnika:</strong> Osnove zavarivanja sklopova, montaža bakarnih cevi i servis gasnih kotlova.</li>
+                        <li data-sr="<strong>Jezici:</strong> Engleski (B2/C1 — tečna pisana i usmena tehnička komunikacija), Ruski (A2 poslovno)." data-en="<strong>Languages:</strong> English (B2/C1 — fluent written and spoken technical communication), Russian (A2 Business)."><strong>Jezici:</strong> Engleski (B2/C1 — tečna pisana i usmena tehnička komunikacija), Ruski (A2 poslovno).</li>
                     </ul>
                 </div>
             </div>
@@ -161,36 +428,36 @@
     <!-- 03. Radno iskustvo -->
     <section id="iskustvo" class="section bg-alt">
         <div class="container">
-            <div class="section-label">SEKCIJA 03 // RADNO ISKUSTVO</div>
-            <h2 class="section-title">Iskustvo u industriji i na terenu</h2>
+            <div class="section-label" data-sr="SEKCIJA 03 // RADNO ISKUSTVO" data-en="SECTION 03 // WORK EXPERIENCE">SEKCIJA 03 // RADNO ISKUSTVO</div>
+            <h2 class="section-title" data-sr="Iskustvo u industriji i na terenu" data-en="Industrial & Field Experience">Iskustvo u industriji i na terenu</h2>
             <div class="experience-list">
                 <div class="exp-card">
                     <div class="exp-header">
                         <div>
-                            <h3>Tehnički saradnik u proizvodnji</h3>
-                            <span class="company">SBS Pro Inženjering — Beograd, Ostružnica</span>
+                            <h3 data-sr="Tehnički saradnik u proizvodnji" data-en="Technical Production Associate">Tehnički saradnik u proizvodnji</h3>
+                            <span class="company" data-sr="SBS Pro Inženjering — Beograd, Ostružnica" data-en="SBS Pro Inženjering — Belgrade, Ostružnica">SBS Pro Inženjering — Beograd, Ostružnica</span>
                         </div>
-                        <span class="exp-tag">PROIZVODNJA & CNC</span>
+                        <span class="exp-tag" data-sr="PROIZVODNJA & CNC" data-en="MANUFACTURING & CNC">PROIZVODNJA & CNC</span>
                     </div>
                     <ul>
-                        <li>Upravljanje i priprema CNC i konvencionalnih mašina za obradu limova i profila (CNC laser, hidraulična presa, waterjet).</li>
-                        <li>Praktičan rad na zavarivanju metalnih elemenata i sklapanju pozicija prema radioničkoj dokumentaciji.</li>
-                        <li>Merenje i kontrola kvaliteta gotovih mašinskih delova nakon obrade.</li>
+                        <li data-sr="Upravljanje i priprema CNC i konvencionalnih mašina za obradu limova i profila (CNC laser, hidraulična presa, waterjet)." data-en="Operated and set up CNC and conventional machinery for sheet metal and profile processing (CNC laser, hydraulic press, waterjet).">Upravljanje i priprema CNC i konvencionalnih mašina za obradu limova i profila (CNC laser, hidraulična presa, waterjet).</li>
+                        <li data-sr="Praktičan rad na zavarivanju metalnih elemenata i sklapanju pozicija prema radioničkoj dokumentaciji." data-en="Hands-on experience in welding metal components and assemblies according to workshop drawings.">Praktičan rad na zavarivanju metalnih elemenata i sklapanju pozicija prema radioničkoj dokumentaciji.</li>
+                        <li data-sr="Merenje i kontrola kvaliteta gotovih mašinskih delova nakon obrade." data-en="Dimensional measurement and quality inspection of finished machined parts.">Merenje i kontrola kvaliteta gotovih mašinskih delova nakon obrade.</li>
                     </ul>
                 </div>
 
                 <div class="exp-card">
                     <div class="exp-header">
                         <div>
-                            <h3>Instalater gasnih sistema i grejnih instalacija</h3>
-                            <span class="company">Terenski i servisni radovi — Beograd</span>
+                            <h3 data-sr="Instalater gasnih sistema i grejnih instalacija" data-en="Gas Systems & Heating Installations Technician">Instalater gasnih sistema i grejnih instalacija</h3>
+                            <span class="company" data-sr="Terenski i servisni radovi — Beograd" data-en="Field & Service Operations — Belgrade">Terenski i servisni radovi — Beograd</span>
                         </div>
-                        <span class="exp-tag">TERMOTEHNIKA</span>
+                        <span class="exp-tag" data-sr="TERMOTEHNIKA" data-en="HVAC & GAS">TERMOTEHNIKA</span>
                     </div>
                     <ul>
-                        <li>Postavljanje, krojenje i spajanje bakarnih cevi za snabdevanje gasnih kotlova zemnim gasom.</li>
-                        <li>Instalacija grejnih tela, cevnih razvoda i prateće opreme za grejanje objekata.</li>
-                        <li>Dijagnostika kvarova, popravka i redovan servis gasnih kotlova.</li>
+                        <li data-sr="Postavljanje, krojenje i spajanje bakarnih cevi za snabdevanje gasnih kotlova zemnim gasom." data-en="Installation, cutting, and fitting of copper pipes for supplying gas boilers.">Postavljanje, krojenje i spajanje bakarnih cevi za snabdevanje gasnih kotlova zemnim gasom.</li>
+                        <li data-sr="Instalacija grejnih tela, cevnih razvoda i prateće opreme za grejanje objekata." data-en="Installation of radiators, piping networks, and space heating units.">Instalacija grejnih tela, cevnih razvoda i prateće opreme za grejanje objekata.</li>
+                        <li data-sr="Dijagnostika kvarova, popravka i redovan servis gasnih kotlova." data-en="Troubleshooting, repair, and servicing of gas boilers.">Dijagnostika kvarova, popravka i redovan servis gasnih kotlova.</li>
                     </ul>
                 </div>
             </div>
@@ -202,13 +469,13 @@
         <div class="container">
             <div class="section-header-flex">
                 <div>
-                    <div class="section-label">SEKCIJA 04 // PORTFOLIJSKI RADOVI</div>
-                    <h2 class="section-title">CAD Modeli i Praktični Projekti</h2>
+                    <div class="section-label" data-sr="SEKCIJA 04 // PORTFOLIJSKI RADOVI" data-en="SECTION 04 // PORTFOLIO WORK">SEKCIJA 04 // PORTFOLIJSKI RADOVI</div>
+                    <h2 class="section-title" data-sr="CAD Modeli i Praktični Projekti" data-en="CAD Models & Academic Projects">CAD Modeli i Praktični Projekti</h2>
                 </div>
                 <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">Svi radovi</button>
+                    <button class="filter-btn active" data-filter="all" data-sr="Svi radovi" data-en="All">Svi radovi</button>
                     <button class="filter-btn" data-filter="cad">CAD / CAM</button>
-                    <button class="filter-btn" data-filter="proizvodnja">Proizvodnja</button>
+                    <button class="filter-btn" data-filter="proizvodnja" data-sr="Proizvodnja" data-en="Manufacturing">Proizvodnja</button>
                 </div>
             </div>
 
@@ -216,10 +483,9 @@
                 <!-- Projekat 1 -->
                 <article class="project-card" data-category="cad proizvodnja">
                     <div class="project-image-placeholder">
-                        <!-- KASNIJE ZAMENI OVAJ DIV SA: <img src="images/projekat1.jpg" alt="CNC deo"> -->
                         <div class="placeholder-inner">
                             <span class="crosshair">+</span>
-                            <p>CRTEŽ / FOTOGRAFIJA 01<br><small>[ Ubaci sliku 3D modela ili gotovog CNC dela ]</small></p>
+                            <p data-sr="CRTEŽ / FOTOGRAFIJA 01<br><small>[ Ubaci sliku 3D modela ili gotovog CNC dela ]</small>" data-en="DRAWING / PHOTO 01<br><small>[ Insert 3D model or finished CNC part photo ]</small>">CRTEŽ / FOTOGRAFIJA 01<br><small>[ Ubaci sliku 3D modela ili gotovog CNC dela ]</small></p>
                         </div>
                     </div>
                     <div class="project-body">
@@ -228,9 +494,9 @@
                             <span>G-KOD</span>
                             <span>CNC STRUG</span>
                         </div>
-                        <h3>Projektovanje i CNC obrada mašinskog dela</h3>
-                        <p>
-                            Kompletan inženjerski ciklus: 3D modeliranje i proračun u Creo Parametric okruženju, izrada radioničkog crteža po ISO standardu, ručno pisanje G-koda i izrada pozicije na CNC glodalici i strugu.
+                        <h3 data-sr="Projektovanje i izrada mašinskog dela u okruženju Creo Parametric" data-en="Design and Manufacturing of a Mechanical Part in Creo Parametric">Projektovanje i izrada mašinskog dela u okruženju Creo Parametric</h3>
+                        <p data-sr="Izrada 3D modela, simulacija i generisanje tehničke dokumentacije po ISO standardu, uz mašinsku obradu i izradu dela u praksi na CNC obradnom centru i strugu." data-en="3D modeling, simulation, and generation of technical documentation according to ISO standards, followed by practical machining and fabrication on a CNC machining center and lathe.">
+                            Izrada 3D modela, simulacija i generisanje tehničke dokumentacije po ISO standardu, uz mašinsku obradu i izradu dela u praksi na CNC obradnom centru i strugu.
                         </p>
                     </div>
                 </article>
@@ -238,10 +504,9 @@
                 <!-- Projekat 2 -->
                 <article class="project-card" data-category="cad">
                     <div class="project-image-placeholder">
-                        <!-- KASNIJE ZAMENI OVAJ DIV SA: <img src="images/projekat2.jpg" alt="SolidWorks sklop"> -->
                         <div class="placeholder-inner">
                             <span class="crosshair">+</span>
-                            <p>CRTEŽ / RENDER 02<br><small>[ Ubaci render sklopa iz SolidWorks-a ]</small></p>
+                            <p data-sr="CRTEŽ / RENDER 02<br><small>[ Ubaci render sklopa iz SolidWorks-a ]</small>" data-en="DRAWING / RENDER 02<br><small>[ Insert SolidWorks assembly render ]</small>">CRTEŽ / RENDER 02<br><small>[ Ubaci render sklopa iz SolidWorks-a ]</small></p>
                         </div>
                     </div>
                     <div class="project-body">
@@ -250,9 +515,9 @@
                             <span>ISO STANDARD</span>
                             <span>SKLOP</span>
                         </div>
-                        <h3>Konstrukcija tematske kutije i seta za kockice</h3>
-                        <p>
-                            3D konstruisanje višedelnog sklopa u SolidWorks-u sa definisanim tolerancijama, naleganjima i kompletnom tehničkom dokumentacijom spremnom za proizvodnju.
+                        <h3 data-sr="Dizajn tematske kutije za društvenu igru u okruženju SolidWorks" data-en="Design of a Thematic Tabletop Dice Box in SolidWorks">Dizajn tematske kutije za društvenu igru u okruženju SolidWorks</h3>
+                        <p data-sr="Konstruisanje i detaljno razmeravanje sklopa u CAD okruženju, uz pripremu tehničke dokumentacije za proizvodnju." data-en="3D assembly design and detailed dimensioning in a CAD environment, including preparation for manufacturing.">
+                            Konstruisanje i detaljno razmeravanje sklopa u CAD okruženju, uz pripremu tehničke dokumentacije za proizvodnju.
                         </p>
                     </div>
                 </article>
@@ -260,10 +525,9 @@
                 <!-- Projekat 3 -->
                 <article class="project-card" data-category="proizvodnja">
                     <div class="project-image-placeholder">
-                        <!-- KASNIJE ZAMENI OVAJ DIV SA SLIKOM -->
                         <div class="placeholder-inner">
                             <span class="crosshair">+</span>
-                            <p>POZICIJA 03<br><small>[ Mesto za diplomski rad ili projekat iz hale ]</small></p>
+                            <p data-sr="POZICIJA 03<br><small>[ Mesto za diplomski rad ili projekat iz hale ]</small>" data-en="ITEM 03<br><small>[ Placeholder for thesis or workshop project ]</small>">POZICIJA 03<br><small>[ Mesto za diplomski rad ili projekat iz hale ]</small></p>
                         </div>
                     </div>
                     <div class="project-body">
@@ -271,8 +535,8 @@
                             <span>LASER / PRESA</span>
                             <span>ZAVARIVANJE</span>
                         </div>
-                        <h3>Budući projekat / Diplomski rad</h3>
-                        <p>
+                        <h3 data-sr="Budući projekat / Diplomski rad" data-en="Upcoming Project / Bachelor's Thesis">Budući projekat / Diplomski rad</h3>
+                        <p data-sr="Sekcija rezervisana za tvoj naredni projekat — možeš dodati slike savijenih limova, zavarenih konstrukcija, proračuna ili diplomskog rada." data-en="Section reserved for your next project — add photos of bent sheet metal parts, welded structures, calculations, or your Bachelor's thesis.">
                             Sekcija rezervisana za tvoj naredni projekat — možeš dodati slike savijenih limova, zavarenih konstrukcija, proračuna ili diplomskog rada.
                         </p>
                     </div>
@@ -284,16 +548,16 @@
     <!-- Kontakt -->
     <section id="kontakt" class="section bg-alt">
         <div class="container contact-box">
-            <div class="section-label">SEKCIJA 05 // KONTAKT</div>
-            <h2>Kontakt i umrežavanje</h2>
-            <p>Dostupan sam za stručnu praksu, part-time angažman uz studije ili juniorsku poziciju u industriji.</p>
+            <div class="section-label" data-sr="SEKCIJA 05 // KONTAKT" data-en="SECTION 05 // CONTACT">SEKCIJA 05 // KONTAKT</div>
+            <h2 data-sr="Kontakt i umrežavanje" data-en="Contact & Networking">Kontakt i umrežavanje</h2>
+            <p data-sr="Dostupan sam za stručnu praksu, part-time angažman uz studije ili juniorsku poziciju u industriji." data-en="Available for engineering internships, part-time roles alongside studies, or junior positions in industry.">Dostupan sam za stručnu praksu, part-time angažman uz studije ili juniorsku poziciju u industriji.</p>
             <div class="contact-links">
                 <a href="mailto:vlastimircernos@gmail.com" class="contact-item">
                     <span>EMAIL</span>
                     <strong>vlastimircernos@gmail.com</strong>
                 </a>
                 <a href="tel:+381692003249" class="contact-item">
-                    <span>TELEFON</span>
+                    <span data-sr="TELEFON" data-en="PHONE">TELEFON</span>
                     <strong>+381 69/2003249</strong>
                 </a>
                 <a href="https://www.linkedin.com" target="_blank" rel="noopener" class="contact-item">
@@ -311,6 +575,52 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Prebacivanje SR / EN jezika
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const translatableElements = document.querySelectorAll('[data-sr][data-en]');
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                langButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const lang = btn.getAttribute('data-lang');
+                document.documentElement.lang = lang;
+
+                translatableElements.forEach(el => {
+                    el.innerHTML = el.getAttribute(`data-${lang}`);
+                });
+            });
+        });
+
+        // Filtriranje projekata
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const filterValue = button.getAttribute('data-filter');
+                projectCards.forEach(card => {
+                    const categories = card.getAttribute('data-category');
+                    card.style.display = (filterValue === 'all' || categories.includes(filterValue)) ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
